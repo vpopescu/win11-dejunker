@@ -1,0 +1,43 @@
+{
+
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'dejunker'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=dejunker",
+                    "--package=dejunker"
+                ],
+                "filter": {
+                    "name": "dejunker",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'dejunker'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=dejunker",
+                    "--package=dejunker"
+                ],
+                "filter": {
+                    "name": "dejunker",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}
