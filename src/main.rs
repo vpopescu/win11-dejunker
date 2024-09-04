@@ -1,5 +1,5 @@
 use clap::{Arg, ArgGroup, Command};
-use files::db::{self, Exec};
+use files::db::{self, Exec, Rule};
 use log::{debug, error};
 use std::{collections::HashMap, env, fs::File, io::Write, process};
 
@@ -169,7 +169,12 @@ fn print_values(
     );
 
     let mut output = String::new();
-    for rule in rules.values() {
+
+    let mut sorted_rules = rules.values().collect::<Vec<&Rule>>();
+    sorted_rules.sort_by(|a, b| a.name.cmp(&b.name));
+
+    for rule in sorted_rules {
+        
         let arg_name = rule.name.clone();
         output.push_str(&format!(
             "    {}: {}\n",

@@ -150,3 +150,28 @@ rules:
         value:  EdgeShoppingAssistantEnabled
         type: i32
 
+  - rule: win-fm-hide-file-extensions
+    arg: win-fm-hide-file-extensions
+    description: Show file extensions in Windows File Explorer
+    admin_required: false
+    value:
+      type: OnOff
+    exec:
+      - subsystem: registry
+        path: HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced
+        value:  HideFileExt
+        type: i32
+
+  - rule: win-fm-show-hidden-files
+    arg: win-fm-show-hidden-files
+    description: Show hidden files in Windows File Explorer
+    admin_required: false
+    value:
+      type: OnOff
+    exec:
+      - subsystem: registry
+        path: HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced
+        value:  Hidden
+        type: i32
+
+
