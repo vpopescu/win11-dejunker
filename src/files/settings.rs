@@ -71,14 +71,21 @@ pub fn execute_rule(
     rules: &HashMap<String, crate::db::Rule>,
     rule_name: &str,
     desired_value: &str,
+    skip_inaccessible: bool
 ) -> Result<(), Box<dyn std::error::Error>> {
     let rule = &rules[rule_name];
 
     if rule.admin_required && utils::is_elevated() == false {
-        warn!(
-            "Rule {} was skipped, operation requires admin rights.",
-            rule_name
-        );
+
+        match skip_inaccessible  {
+            true => {
+                warn!("Rule {} was skipped, operation requires admin rights.", rule_name);
+            },
+            false => {
+                return Err(format!("Rule {} requires admin rights.", rule_name).into());
+            }
+        }
+       
         return Ok(());
     }
 

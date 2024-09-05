@@ -141,14 +141,14 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // write mode (file)
     if input_file.is_some() {
-        apply_settings_file(&rules, input_file.unwrap().as_str())?;
+        apply_settings_file(&rules, input_file.unwrap().as_str(), true)?;
     }
 
     // get all supplied args
     for arg in commands.iter() {
         if matches.contains_id(arg) {
             let value = matches.get_one::<OnOffType>(arg).unwrap();
-            files::settings::execute_rule(&rules, arg, &value.to_string())?;
+            files::settings::execute_rule(&rules, arg, &value.to_string(), false)?;
         }
     }
     Ok(())
@@ -242,12 +242,13 @@ fn write_string_to_file(content: &str, file_path: &str) -> Result<(), Box<dyn st
 fn apply_settings_file(
     rules: &HashMap<String, db::Rule>,
     path_or_url: &str,
+    skip_inaccessible: bool
 ) -> Result<(), Box<dyn std::error::Error>> {
     let file = files::settings::read_settings_file(path_or_url)?;
 
     // for each setting
     for (key, value) in file.settings.iter() {
-        files::settings::execute_rule(rules, &key, &value)?;
+        files::settings::execute_rule(rules, &key, &value, skip_inaccessible)?;
     }
 
     Ok(())

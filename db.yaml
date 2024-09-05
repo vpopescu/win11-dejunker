@@ -210,3 +210,16 @@ rules:
         type: i32
 
 
+  - rule: win-copilot-enable
+    arg: win-copilot-enable
+    description: Windows Copilot
+    admin_required: true
+    value:
+      type: OnOff
+    exec:
+      - subsystem: registry
+        reversed: true
+        path: HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\WindowsCopilot
+        value:  TurnOffWindowsCopilot
+        type: i32
+
