@@ -64,6 +64,11 @@ rules:
         path: HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Search
         value:  BingSearchEnabled
         type: i32        
+      - subsystem: registry
+        reversed: true
+        path: HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Search
+        value:  AllowSearchToUseLocation
+        type: i32
 
   - rule: win-sync-provider-notifications
     arg: win-sync-provider-notifications
@@ -77,8 +82,8 @@ rules:
         value:  ShowSyncProviderNotifications
         type: i32
 
-  - rule: win-tips-on-lock-screen
-    arg: win-tips-on-lock-screen
+  - rule: win-lock-screen-tips
+    arg: win-lock-screen-tips
     description: Get fun facts, tips, tricks, and more on your lock screen
     admin_required: false
     value:
@@ -93,8 +98,8 @@ rules:
         value:  SubscribedContent-338387Enabled
         type: i32
 
-  - rule: win-suggested-content-in-settings
-    arg: win-suggested-content-in-settings
+  - rule: win-settings-suggested-content
+    arg: win-settings-suggested-content
     description: Show suggested content in settings app
     admin_required: false
     value:
@@ -172,6 +177,36 @@ rules:
       - subsystem: registry
         path: HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced
         value:  Hidden
+        type: i32
+
+
+  - rule: win-start-menu-show-run-as
+    arg: win-start-menu-show-run-as
+    description: Show Run As different user in Start menu
+    admin_required: true
+    value:
+      type: OnOff
+    exec:
+      - subsystem: registry
+        path: HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Windows\Explorer
+        value:  ShowRunAsDifferentUserInStart
+        type: i32
+
+  # needs reboot
+  - rule: win-widgets-enable
+    arg: win-widgets-enable
+    description: Enable widgets in Windows 11
+    admin_required: true
+    value:
+      type: OnOff
+    exec:
+      - subsystem: registry
+        path: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PolicyManager\default\NewsAndInterests\AllowNewsAndInterests
+        value:  value
+        type: i32
+      - subsystem: registry
+        path: HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Dsh
+        value:  AllowNewsAndInterests
         type: i32
 
 

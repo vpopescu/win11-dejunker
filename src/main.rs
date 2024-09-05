@@ -174,7 +174,6 @@ fn print_values(
     sorted_rules.sort_by(|a, b| a.name.cmp(&b.name));
 
     for rule in sorted_rules {
-        
         let arg_name = rule.name.clone();
         output.push_str(&format!(
             "    {}: {}\n",
